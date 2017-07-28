@@ -1,0 +1,95 @@
+--Pig Relational Operators Part III
+--Robert Esteves
+
+--Relational Operator
+--ORDER BY
+--RANK
+--SPLIT
+--STORE
+--UNION
+
+
+pig -x local
+
+--ORDER BY Operator
+
+A = LOAD 'data3' USING PigStorage('\t') AS (a1:int, a2:int, a3:int);
+
+DUMP A;
+
+X = ORDER A BY a3 DESC;
+
+DUMP X;
+
+--RANK Operator
+
+A = LOAD 'data16' USING PigStorage('\t') AS (f1:chararray, f2:chararray, f3:chararray);
+
+DUMP A;
+
+B = RANK A;
+
+DUMP B;
+
+--SPLIT Operator
+--Partitions a relation into two or more relations
+--More expensive than using a filter
+
+A = LOAD 'data15' USING PigStorage('\t') AS (f1:int, f2:int, f3:int);
+
+DUMP A;
+
+SPLIT A INTO X IF f1<7, Y IF f2 == 5, Z IF (f3<6 OR f3>6);
+
+DUMP X;
+
+DUMP Y;
+
+DUMP Z;
+
+--STORE Operator
+--Store or saves results to the file system.
+--Data is stored using PigStorage and the "|" as the field delimiter
+
+A = LOAD 'data3' USING PigStore('\t') AS (f1:int, f2:int, f3:int);
+
+DUMP A;
+
+--This command is similar to the Qlikview STORE operator
+--Pig does not overwrite existing files so if the exists the operation will fail.
+--Pig will create a folder and store the results in text files.
+
+STORE A INTO 'my_result_set' USING Pigstorage ('|');
+
+cat my_result_set
+
+--UNION Operator
+--Computes the union of two or more relations
+--Does not preserve the order of the relations
+--This command is equivalent to the "UNION ALL" int SQL
+
+A = LOAD 'data17' USING PigStorage('\t') AS (a1:int, a2:int a3:int);
+
+DUMP A;
+
+B = LOAD 'data18' USING PigStorage('\t') AS (a1:int, a2:int, a3:int);
+
+DUMP B;
+
+X = UNION A, B;
+
+DUMP X;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
