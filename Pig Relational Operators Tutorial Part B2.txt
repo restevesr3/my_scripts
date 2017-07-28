@@ -1,0 +1,79 @@
+--Pig Relational Operators Tutorial Part 1
+--Robert Esteves
+--Notes: 
+--default is PigStorage tab delimited
+--But it I use it here to avoid any confusion
+--as to what I'm doing.
+
+unix comands
+
+ls -l
+
+cat a_1.txt
+
+chmod 777 a_1.txt
+
+pig -x local
+
+A = LOAD 'A_1.txt' USING PigStorage('\t') AS (name:chararray, id:int);
+
+DUMP A;
+
+B = LOAD 'B.txt' USING PigStorage('\t') AS (name:chararray, tools:chararray);
+
+DUMP B;
+
+clear
+
+--LEFT OUTER JOIN
+
+C = JOIN A BY $0 LEFT OUTER, B BY $0;
+
+DUMP C;
+
+--RIGHT OUTER JOIN
+
+C = JOIN A BY $0 RIGHT OUTER, B BY $0;
+
+DUMP C;
+
+--FULL OUTER JOIN
+
+C = JOIN A BY $0 FULL, B BY $0;
+
+DUMP C;
+
+--inner join
+
+C = JOIN A BY $0, B BY $0;
+
+DUMP C;
+
+--LIMIT operator (same as TOP(n) in TSQL)
+
+A = LOAD 'data3' USING PigStorage('\t') AS (a1:int, a2:int, a3:int);
+
+DUMP A;
+
+X = LIMIT A 3;
+
+DUMP X;
+
+--LOAD OPERATOR
+
+A = LOAD 'c.txt';
+
+--and 
+
+A = LOAD 'c.txt' USING PigStorage('\t'); 
+
+--are equivalent
+
+DUMP A;
+
+
+
+
+
+
+
