@@ -1,0 +1,18 @@
+--Pig Streaming Tutorial
+--Robert Esteves
+
+
+
+A = LOAD 'file.txt' USING PigStorage('\t');
+
+DUMP A;
+
+DEFINE square `square.py` SHIP ('/home/square.py');
+
+B = STREAM A THROUGH square;
+
+DUMP B;
+
+
+
+
