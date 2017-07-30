@@ -1,0 +1,108 @@
+--Pig Programming Evaluation Functions
+--Robert Esteves
+
+--AVG  ignores null values
+--CONCAT
+--COUNT
+--COUNT_STAR
+--DIFF
+
+
+--AVG FUNCTION
+A = LOAD 'data19' USING PigStorage('\t') AS (name:chararray, term:chararray, gpa:float);
+
+DUMP A;
+
+B  = GROUP A BY name;
+
+DUMP B;
+
+X = FOREACH B GENERATE A.name, AVG(A.gpa);
+
+DUMP X;
+
+--CONCAT FUNCTION
+--If any expression is NULL the result will be NULL as well
+
+A = LOAD 'data20' USING PigStorage('\t') AS (f1:chararray, f2:chararray, f3:chararray);
+
+DUMP A;
+
+x = FOREACH A GENERATE CONCAT(
+(chararray)f1, CONCAT('_',
+CONCAT( (chararray)f2, (chararray)f3
+) 
+)
+)
+
+DUMP X;
+
+--COUNT Function
+--COUNT function ignores NULLS.
+
+A = LOAD 'data22' USING PigStorage('\t') AS (f1:int, f2:int, f3:int);
+
+DUMP A;
+
+B = GROUP A BY f1;
+
+DUMP B;
+
+--Counts the tuples in the bag
+X = FOREACH B GENERATE COUNT(A);
+
+DUMP X;
+
+
+--COUNT_STAR function
+--Computes the number of tuples in a bag.
+--Counts NULLs as well
+
+A = LOAD 'data22' USING PigStorage('\t') AS (f1:int, f2:int, f3:int);
+
+DUMP A;
+
+B = GROUP A BY f1;
+
+DUMP B;
+
+X = FOREACH B GENERATE COUNT_STAR(A);
+
+DUMP X;
+
+--DIFF Function
+--Compares two fields in a tuple.
+--Any fields in a bag but not in the other are returned in a bag
+--If the bags match the function returns an empty bag
+--If the fields are not bags, then it will wrap in tuples in a baf if they don't match. 
+--If the two records match an empty bag will be returned
+
+A = LOAD  'data21' USING PigStorage('\t') AS
+(B1:bag{ T1:tuple(t1:int, t2:int) }, B2:bag{T2:tuple(f1:int, f2:int) } );
+
+DUMP A;
+
+DESCRIBE A;
+
+X = FOREACH A GENERATE DIFF(B1, B2);
+
+DUMP X;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
