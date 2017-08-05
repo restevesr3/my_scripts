@@ -1,0 +1,18 @@
+--Pig Programming Writing Pig UDF
+--Robert Esteves
+
+--Pig UDF can be implemented in three languages:
+--1. Java
+--2. Javascript
+--3. Python
+
+--Most extensive support is provided to Java
+--Java functions are more efficient, because they are created
+--in the Mapreduce language
+--Java scripts also have access to the Piggy Bank repository
+
+
+
+
+
+

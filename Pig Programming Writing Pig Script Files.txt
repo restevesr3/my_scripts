@@ -1,0 +1,60 @@
+--Pig Programming - Writing Pig Script Files
+--Robert Esteves
+
+-- script extension is .pig
+<file_name>.pig
+
+--run in local mode or hdfs mode
+
+--call script in local mode
+
+pig -x local '/home/cloudera/Desktop/stu_data.pig'
+
+--call script in hdfs mode
+
+pig -x mapreduce '/home/cloudera/Desktop/stu_data.pig'
+
+--OR
+
+pig '/home/cloudera/Desktop/stu_data.pig'
+
+-- to execute the file in local mode you simple write do not use the single quotes
+--just as the line below shows. This version applies to the grunt shell only
+
+grunt>exec /home/cloudera/Desktop/my_stu_data.pig
+
+--you can also run the script by just using the following command in local mode
+
+cloudera@localhost ~]$ pig -x local '/home/cloudera/Desktop/my_stu_data.pig'
+
+--in this version of the script you have to use the quotes since you are in
+--the terminal
+
+--To execute the script in hdf mode, you need to be in mapreduce. For example:
+--also omit the the directory path inside the script just state the file name.
+--because, the file is already in hdfs
+
+grunt> pwd
+
+grunt>pig -x mapreduce
+
+--move to the directory in hdfs where the file is located and execute
+
+grunt> pwd
+
+--the result should be something like this
+
+hdfs://localhost.localdomain:8020/user/cloudera/pigcourse
+
+--execute the command below so you can view the file in hdfs
+
+cat stu_data.csv
+
+--now you can run the hdfs version of the script.
+--remember, no single quotes around the file path
+
+grunt> exec /home/cloudera/Desktop/my_stu_data_hdfs_fmt.pig
+
+
+
+
