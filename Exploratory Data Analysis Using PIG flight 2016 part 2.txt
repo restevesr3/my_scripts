@@ -1,0 +1,48 @@
+Subject: Exploratory Data Analysis Using PIG Programming
+Author: Robert Esteves
+
+Data: On-time Airline Performance Data 2016
+Data set dimensions: 
+1. observations->245,264
+2. variables->33
+
+Analysis type: Univariate
+variables Analyzed:
+
+1. Unique Carrier Name
+2. Unique Carrier Entity
+3. Region
+4. Carrier
+
+grunt> history
+1   f_2016 = LOAD '/home/cloudera/Downloads/flight_2016_no_header.csv' USING PigStorage('|');
+2   f_2016_sample = LIMIT f_2016 5;
+3   col_unique_carrier_name = FOREACH f_2016 generate $2 AS Unique_Carrier_Name;
+4   group_by_unique_carrier_name = GROUP col_unique_carrier_name BY Unique_Carrier_Name;
+5   count_unique_carrier_name = FOREACH group_by_unique_carrier_name GENERATE group AS unique_carrier_name, COUNT(col_unique_carrier_name.Unique_Carrier_Name) as freq;
+6   STORE count_unique_carrier_name INTO '/home/cloudera/Downloads/unique_carrier_name_results' USING PigStorage('|');
+
+grunt> history
+1   f_2016 = LOAD '/home/cloudera/Downloads/flight_2016_no_header.csv' USING PigStorage('|');
+2   f_2016_sample = LIMIT f_2016 5;
+3   col_unique_carrier_entity = FOREACH f_2016 GENERATE $3 AS unique_carrier_entity;
+4   group_unique_carrier_entity = GROUP col_unique_carrier_entity BY unique_carrier_entity;
+5   count_unique_carrier_entity = FOREACH group_unique_carrier_entity GENERATE group as unique_carrier_entity, COUNT(col_unique_carrier_entity.unique_carrier_entity) AS freq;
+6   STORE count_unique_carrier_entity INTO '/home/cloudera/Downloads/unique_carrier_entity_results' USING PigStorage('|');
+
+grunt> history
+1   f_2016 = LOAD '/home/cloudera/Downloads/flight_2016_no_header.csv' USING PigStorage('|');
+2   f_2016_sample = LIMIT f_2016 5;
+3   col_region = FOREACH f_2016 GENERATE $4 AS region;
+4   group_region = GROUP col_region BY region;
+5   count_region = FOREACH group_region GENERATE group AS region, COUNT(col_region.region) AS freq;
+6   STORE count_region INTO '/home/cloudera/Downloads/region_results' USING PigStorage('|');
+
+grunt> history
+1   f_2016 = LOAD '/home/cloudera/Downloads/flight_2016_no_header.csv' USING PigStorage('|');
+2   f_2016_sample = LIMIT f_2016 5;
+3   col_carrier = FOREACH f_2016 GENERATE $5 AS carrier;
+4   group_col_carrier = GROUP col_carrier BY carrier;
+5   count_carrier = FOREACH group_col_carrier GENERATE  group as carrier, COUNT(col_carrier.carrier) AS COUNT;
+6   STORE count_carrier INTO '/home/cloudera/Downloads/carrier_results' USING PigStorage('|');
+
