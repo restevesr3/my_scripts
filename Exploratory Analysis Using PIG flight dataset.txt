@@ -1,0 +1,29 @@
+grunt> history
+1   f_2016 = LOAD '/home/cloudera/Downloads/flight_2016_no_header.csv' USING PigStorage('|');
+2   f_2016_sample = LIMIT f_2016 10;
+3   unique_carrier = FOREACH f_2016 GENERATE $0 AS unique_carrier;
+4   distinct_carrier_distinct_values = DISTINCT unique_carrier;
+5   unique_carrier = FOREACH f_2016 GENERATE $0 AS unique_carrier_id;
+6   unique_carrier_count = FOREACH unique_carrier GENERATE COUNT(unique_carrier_id) AS freq;
+7   group_by_unique_carrier = GROUP unique_carrier BY unique_carrier_id;
+8   count_unique_carrier = FOREACH group_by_unique_carrier GENERATE group AS carrier_id, COUNT(unique_carrier.unique_carrier_id) AS freq;
+
+grunt> history
+1   f_2016 = LOAD '/home/cloudera/Downloads/flight_2016_no_header.csv' USING PigStorage('|');
+2   col_airline_id = FOREACH f_2016 GENERATE $1 AS airline_id;
+3   limit_airline_id = DISTINCT col_airline_id;
+4   group_by_airline_id = GROUP col_airline_id BY airline_id;
+5   count_airline_id = FOREACH group_by_airline_id GENERATE group as airline_id, COUNT(col_airline_id.airline_id) AS freq;
+
+grunt> history
+1   f_2016 = LOAD '/home/cloudera/Downloads/flight_2016_no_header.csv' USING PigStorage('|');
+2   col_airline_id = FOREACH f_2016 GENERATE $1 AS airline_id;
+3   limit_airline_id = DISTINCT col_airline_id;
+4   group_by_airline_id = GROUP col_airline_id BY airline_id;
+5   count_airline_id = FOREACH group_by_airline_id GENERATE group as airline_id, COUNT(col_airline_id.airline_id) AS freq;
+6   col_carrier_name = FOREACH f_2016 GENERATE $2 AS carrier_name;
+7   distinct_carrier_name = DISTINCT col_carrier_name;
+8   group_by_carrier_name = GROUP col_carrier_name BY carrier_name;
+9   count_carrier_name = FOREACH group_by_carrier_name GENERATE group AS carrier_name, COUNT(col_carrier_name.carrier_name) AS freq;
+
+
