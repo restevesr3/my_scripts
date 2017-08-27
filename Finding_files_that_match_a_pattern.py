@@ -20,7 +20,7 @@ pwd
 
 # In[4]:
 
-#F:/Virtual_NAS_Drive/Datasets/132719078_T_T100D_MARKET_US_CARRIER_ONLY_2014.csv
+# Datasets/132719078_T_T100D_MARKET_US_CARRIER_ONLY_2014.csv
 # replace the year with question marks (?) to search for the individual years
 pattern = 'Datasets/132719078_T_T100D_MARKET_US_CARRIER_ONLY_????.csv'
 
