@@ -1,0 +1,1 @@
+EXPLAIN select count(*) from performance_test;
